@@ -1,2 +1,2 @@
 # Pesquisa-e-Ordena-o
-Cadeira de pesquisa e ordenação
+Alguns algoritmos implementados na cadeira de pesquisa e ordenação
