@@ -1,50 +1,64 @@
-from random import randint
 import timeit
+from random import randint
 import matplotlib as mpl
-import matplotlib.pyplot as plt
 
+
+mpl.use('Agg')
+import matplotlib.pyplot as plt
+def desenhaGrafico(x, y, graphLabel, fileName,xl = "Quantidade de numeros", yl = "Tempo"):
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111)
+    ax.plot(x,y, label = graphLabel)
+    ax.legend(bbox_to_anchor=(1, 1),bbox_transform=plt.gcf().transFigure)
+    plt.ylabel(yl)
+    plt.xlabel(xl)
+    fig.savefig(fileName)
 
 def bubbleSort(arr):
-	count = 0
 	lenght = len(arr)
 	for i in range(lenght):
 		for j in range(lenght-i-1):
-			count+=1
 			if arr[j] > arr[j+1]:
 				arr[j], arr[j+1] = arr[j+1], arr[j]
-	return count
 
-def geraLista(tam):
+def geraListaCrescente(tam):
     lista = []
-    for i in range(tam):
+    i = 0
+    while i < tam: 
+        lista.append(i)
+        i+=1
+    return lista
+
+def geraListaDecrescente(tam):
+    lista = []
+    while tam > 0:
+        lista.append(tam)
+        tam-=1
+    return lista
+
+def geraListaAleatoria(tam):
+    lista = []
+    while tam > len(lista):
         n = randint(1,1*tam)
         if n not in lista: lista.append(n)
     return lista
 
-mpl.use('Agg')
+x = [1000, 2000, 3000, 4000, 5000]
 
+yMelhorCaso = []
+yPiorCaso = []
+yMedioCaso = []
 
-def desenhaGrafico(x, y, fileName, labely, labelx):
-	fig = plt.figure(figsize=(10, 8))
-	ax = fig.add_subplot(111)
-	ax.plot(x, y, label = "BubbleSort")
-	ax.legend(bbox_to_anchor=(1, 1),bbox_transform=plt.gcf().transFigure)
-	plt.ylabel(labely)
-	plt.xlabel(labelx)
-	fig.savefig(fileName)
- 
-x = [10000, 20000, 30000, 40000, 50000]
-y = []
+for i in x:
+  lista = geraListaCrescente(i)
+  yMelhorCaso.append(timeit.timeit("bubbleSort({})".format(lista),setup="from __main__ import bubbleSort",number=1))
+  
+  lista = geraListaDecrescente(i)
+  yPiorCaso.append(timeit.timeit("bubbleSort({})".format(lista),setup="from __main__ import bubbleSort",number=1))
+  
+  lista = geraListaAleatoria(i)
+  yMedioCaso.append(timeit.timeit("bubbleSort({})".format(lista),setup="from __main__ import bubbleSort",number=1))
 
-swaps = []
-
-for i in range(5):
-	lista = geraLista(x[i])
-	swaps.append(bubbleSort(lista))
-	y.append(timeit.timeit("bubbleSort({})".format(lista), setup="from __main__ import bubbleSort", number=1))
-
-
-
-desenhaGrafico(x, y, 'grafico_bubble', 'Tempo', 'Quantidade')
-desenhaGrafico(x, swaps, 'grafico_comparacoes', 'Comparacoes', 'Quantidade')
-print(swaps)
+desenhaGrafico(x, yMelhorCaso, 'Melhor caso', 'melhor-caso.png')
+desenhaGrafico(x, yPiorCaso, 'Pior caso', 'pior-caso.png')
+desenhaGrafico(x, yMedioCaso, 'Medio caso', 'medio-caso.png')
