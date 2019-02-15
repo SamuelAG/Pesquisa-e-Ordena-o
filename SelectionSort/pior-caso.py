@@ -20,10 +20,16 @@ lista = [1, 2, 3, 4, 5, 6]
 
 listaPermutacoes = list(it.permutations(lista,6))
 
+listaPermut = []
+
 tempos = []
 
 for i in listaPermutacoes:
-    tempos.append(timeit.timeit("selectionSort({})".format(listaPermutacoes), setup="from __main__ import selectionSort", number=10))
+    lista = list(i)
+    listaPermut.append(lista)
+    
+for i in listaPermut:
+    tempos.append(timeit.timeit("selectionSort({})".format(i), setup="from __main__ import selectionSort", number=10))
     
     
 maxIndex = tempos.index(max(tempos))
