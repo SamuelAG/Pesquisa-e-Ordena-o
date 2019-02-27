@@ -50,7 +50,7 @@ def QuickSort(lst):
 
 
 x = [10000, 20000, 30000, 40000, 50000]
-y = [200000, 400000, 600000, 800000, 1000000]
+y = []
 
 for i in x:
     y.append(timeit.timeit("QuickSort({})".format(geraLista(i)),setup="from __main__ import QuickSort",number=1))
