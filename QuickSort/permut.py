@@ -39,7 +39,7 @@ for i in lista:
 times = []
 
 for i in listPermut:
-    times.append(timeit.timeit('QuickSort({})'.format(lista),setup="from __main__ import QuickSort",number=1))
+    times.append(timeit.timeit('QuickSort({})'.format(i),setup="from __main__ import QuickSort",number=1))
     
 maxIndex = times.index(max(times))
 minIndex = times.index(min(times))
