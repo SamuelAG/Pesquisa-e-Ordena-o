@@ -91,11 +91,11 @@ yBuscaBinariaRecursiva = []
 yBuscaSequencial = []
 
 for i in x:
-  yBuscaBinariaIterativaa.append(timeit.timeit("buscaBinaria({}, {})".format(geraLista(1000000), 1000000),setup="from __main__ import buscaBinaria",number=100))
+  yBuscaBinariaIterativaa.append(timeit.timeit("buscaBinaria({}, {})".format(geraLista(i), i),setup="from __main__ import buscaBinaria",number=100))
 
-  yBuscaBinariaRecursiva.append(timeit.timeit("buscaBinariaRecursiva({}, {}, {}, {})".format(geraLista(1000000), 0, 10000, 1000000),setup="from __main__ import buscaBinariaRecursiva",number=100))
+  yBuscaBinariaRecursiva.append(timeit.timeit("buscaBinariaRecursiva({}, {}, {}, {})".format(geraLista(i), 0, i, i),setup="from __main__ import buscaBinariaRecursiva",number=100))
 
-  yBuscaSequencial.append(timeit.timeit("buscaSequencial({}, {})".format(geraLista(1000000), 1000000),setup="from __main__ import buscaSequencial",number=100))
+  yBuscaSequencial.append(timeit.timeit("buscaSequencial({}, {})".format(geraLista(i), i),setup="from __main__ import buscaSequencial",number=100))
 
 tempos = [yBuscaBinariaIterativaa, yBuscaBinariaRecursiva, yBuscaSequencial]
 labels = ['Busca Binária Iterativa', 'Busca Binária Recursiva', 'Busca Sequencial']
