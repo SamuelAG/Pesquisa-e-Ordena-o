@@ -1,12 +1,25 @@
 import timeit
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+def desenhaGrafico(x, y, graphLabel, fileName, xl = "Quantidade de números", yl = "Tempo"):
+  fig = plt.figure(figsize=(10, 8))
+  ax = fig.add_subplot(111)
+  for i in range(3):
+      print(y[i], graphLabel[i])
+      ax.plot(x, y[i], label = graphLabel[i])
+  ax.legend(bbox_to_anchor=(1, 1),bbox_transform=plt.gcf().transFigure)
+  plt.ylabel(yl)
+  plt.xlabel(xl)
+  fig.savefig(fileName) 
 
 def geraLista(tam):
-    lista = []
-    i = 0
-    while i < tam: 
-        lista.append(i)
-        i+=1
-    return lista
+  lista = []
+  i = 1
+  while i <= tam: 
+      lista.append(i)
+      i+=1
+  return lista
 
 def buscaBinaria(lista, chave):
   inicio = 0
@@ -48,11 +61,43 @@ def buscaSequencial(lista, chave):
 # Problema Soma das casas, https://www.urionlinejudge.com.br/judge/pt/problems/view/2422
 # resolver com força bruta, depois com busca binária e comparar os resultado 
 
+# força bruta, não sei se tá certo
+def problemaCasasBruteForce(quantidade, soma):
+  lista = []
+  for i in range(lista):
+    lista.append(int(input()))
+  
+  for i in range(quantidade):
+    for j in range(quantidade):
+      if lista[i] + lista[j] == soma:
+        return [lista[i], lista[j]]
 
-bb = timeit.timeit("buscaBinaria({}, {})".format(geraLista(1000000), 733338),setup="from __main__ import buscaBinaria",number=100)
-bbr = timeit.timeit("buscaBinariaRecursiva({}, {}, {}, {})".format(geraLista(100000), 0, 10000, 73338),setup="from __main__ import buscaBinariaRecursiva",number=100)
-bs = timeit.timeit("buscaSequencial({}, {})".format(geraLista(1000000), 733338),setup="from __main__ import buscaSequencial",number=100)
 
-print("Busca binária iterativa: ", bb)
-print("Busca binária recursiva: ", bbr)
-print("Busca sequencial: ", bs)
+# não sei se tá certo
+def problemaCasasBB(quantidade, soma):
+  lista = []
+  for i in range(lista):
+    lista.append(int(input()))
+  
+  for i in lista:
+    resultado = buscaBinariaRecursiva(lista, 0, len(lista), soma-i)
+    if resultado != -1:
+      return [i, resultado]
+
+x = [100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000]
+
+yBuscaBinariaIterativaa = []
+yBuscaBinariaRecursiva = []
+yBuscaSequencial = []
+
+for i in x:
+  yBuscaBinariaIterativaa.append(timeit.timeit("buscaBinaria({}, {})".format(geraLista(1000000), 1000000),setup="from __main__ import buscaBinaria",number=100))
+
+  yBuscaBinariaRecursiva.append(timeit.timeit("buscaBinariaRecursiva({}, {}, {}, {})".format(geraLista(1000000), 0, 10000, 1000000),setup="from __main__ import buscaBinariaRecursiva",number=100))
+
+  yBuscaSequencial.append(timeit.timeit("buscaSequencial({}, {})".format(geraLista(1000000), 1000000),setup="from __main__ import buscaSequencial",number=100))
+
+tempos = [yBuscaBinariaIterativaa, yBuscaBinariaRecursiva, yBuscaSequencial]
+labels = ['Busca Binária Iterativa', 'Busca Binária Recursiva', 'Busca Sequencial']
+
+desenhaGrafico(x, tempos, labels, 'comparação.png')
