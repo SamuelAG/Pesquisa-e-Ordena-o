@@ -45,6 +45,9 @@ def buscaSequencial(lista, chave):
     i+=1
   return -1
 
+# Problema Soma das casas, https://www.urionlinejudge.com.br/judge/pt/problems/view/2422
+# resolver com força bruta, depois com busca binária e comparar os resultado 
+
 
 bb = timeit.timeit("buscaBinaria({}, {})".format(geraLista(1000000), 733338),setup="from __main__ import buscaBinaria",number=100)
 bbr = timeit.timeit("buscaBinariaRecursiva({}, {}, {}, {})".format(geraLista(100000), 0, 10000, 73338),setup="from __main__ import buscaBinariaRecursiva",number=100)
